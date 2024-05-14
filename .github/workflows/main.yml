@@ -22,9 +22,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-
-      # Runs the "semgrep ci" command
-      - run: semgrep ci
+      - name: Run Semgrep
+        run: semgrep ci
         env:
-          # Use a secret token for connecting to the Semgrep AppSec Platform
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
