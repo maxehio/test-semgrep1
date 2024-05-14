@@ -1,0 +1,30 @@
+name: Semgrep
+
+on:
+  # This triggers the workflow on pull requests to any branch
+  pull_request: {}
+  
+  # This allows you to manually trigger the workflow
+  workflow_dispatch: {}
+
+  # This triggers the workflow on push to "master" and "main" branches
+  push:
+    branches: ["master", "main"]
+
+jobs:
+  semgrep:
+    name: semgrep/ci
+    runs-on: ubuntu-latest
+
+    container:
+      image: semgrep/semgrep
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs the "semgrep ci" command
+      - run: semgrep ci
+        env:
+          # Use a secret token for connecting to the Semgrep AppSec Platform
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
